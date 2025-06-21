@@ -2,20 +2,24 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '30 5 * * *'
+    - cron: '0 5 * * *'  # Daily at 5:00 UTC
   workflow_dispatch:
 
 jobs:
-  commit-job:
+  commit:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Make empty commit - 23f3002227@ds.study.iitm.ac.in
+      - name: Commit change - 23f3002227@ds.study.iitm.ac.in
         run: |
-          git config user.name "GitHub Action"
-          git config user.email "23f3002227@ds.study.iitm.ac.in"
-          git commit --allow-empty -m "Daily commit $(date)"
+          git config --global user.name "GitHub Action"
+          git config --global user.email "23f3002227@ds.study.iitm.ac.in"
+          date > date.txt
+          git add date.txt
+          git commit -m "Daily commit"
           git push
