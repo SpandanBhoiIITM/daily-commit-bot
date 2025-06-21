@@ -20,4 +20,3 @@ jobs:
           git add date.txt
           git commit -m "Daily commit"
           git push
-
