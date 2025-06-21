@@ -2,11 +2,11 @@ name: Daily Commit
 
 on:
   schedule:
-    - cron: '0 5 * * *'  # Daily at 5:00 UTC
+    - cron: '30 22 * * *'  # Runs daily at 22:30 UTC
   workflow_dispatch:
 
 jobs:
-  commit:
+  commit-job:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,11 +15,11 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit change - 23f3002227@ds.study.iitm.ac.in
+      - name: Make a dummy commit - 23f3002227@ds.study.iitm.ac.in
         run: |
+          echo "Updated on $(date)" >> daily.txt
           git config --global user.name "GitHub Action"
           git config --global user.email "23f3002227@ds.study.iitm.ac.in"
-          date > date.txt
-          git add date.txt
-          git commit -m "Daily commit"
+          git add daily.txt
+          git commit -m "Automated daily commit"
           git push
